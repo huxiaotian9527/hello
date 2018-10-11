@@ -11,7 +11,7 @@ public class ArrayMaxHeap<T extends Comparable<? super T>> implements MaxHeapInt
 		this(DEFAULT_INITIAL_CAPACITY);
 	}
 	public ArrayMaxHeap(int initalCapacity){
-		heap = (T[]) new Comparable[initalCapacity];//???
+		heap = (T[]) new Comparable[initalCapacity];//新建一个大小为initCapacity的数组
 		lastIndex = 0;
 	}
 	
@@ -29,7 +29,7 @@ public class ArrayMaxHeap<T extends Comparable<? super T>> implements MaxHeapInt
 		}
 //		System.out.println("lastIndex = " + lastIndex);
 		for(int index = lastIndex / 2; index >= 1; index--)
-			reheap(index);//从最后一个非叶结点到根结点调用reheap进行堆调整操作
+			reHeap(index);//从最后一个非叶结点到根结点调用reheap进行堆调整操作
 //		for(int index = 1; index <= lastIndex; index++)
 //			System.out.println(heap[index]);
 	}
@@ -40,7 +40,7 @@ public class ArrayMaxHeap<T extends Comparable<? super T>> implements MaxHeapInt
 			doubleArray();//若堆空间不足，则堆大小加倍
 		int newIndex = lastIndex;//从最后一个元素开始逐渐向上与父结点比较
 		int parentIndex = newIndex / 2;
-		heap[0] = newEntry;//哨兵
+//		heap[0] = newEntry;//哨兵	没啥用
 		while(newEntry.compareTo(heap[parentIndex]) > 0){
 			heap[newIndex] = heap[parentIndex];
 			newIndex = parentIndex;
@@ -58,7 +58,6 @@ public class ArrayMaxHeap<T extends Comparable<? super T>> implements MaxHeapInt
 		heap = (T[]) new Comparable[lastIndex * 2];
 		for(int i = 1; i < lastIndex; i++)//lastIndex 在未插入元素前先自增了 1
 			heap[i] = oldHeap[i];
-		oldHeap = null;//垃圾回收
 	}
 
 	public T removeMax() {
@@ -67,7 +66,7 @@ public class ArrayMaxHeap<T extends Comparable<? super T>> implements MaxHeapInt
 			root = heap[1];
 			heap[1] = heap[lastIndex];//将最后一个元素代替第一个元素
 			lastIndex--;//转化为删除最后一个元素
-			reheap(1);//在树根处进行堆调整
+			reHeap(1);//在树根处进行堆调整
 		}
 		return root;
 	}
@@ -76,7 +75,7 @@ public class ArrayMaxHeap<T extends Comparable<? super T>> implements MaxHeapInt
 	 * @Task:将树根为rootIndex的半堆调整为新的堆，半堆：树的左右子树都是堆
 	 * @param rootIndex 以rootIndex为根的子树
 	 */
-	private void reheap(int rootIndex){
+	private void reHeap(int rootIndex){
 		boolean done = false;//标记堆调整是否完成
 		T orphan = heap[rootIndex];
 		int largeChildIndex = 2 * rootIndex;//默认左孩子的值较大

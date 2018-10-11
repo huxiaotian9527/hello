@@ -44,27 +44,27 @@ public class ArrayDictionary<K,V> implements DictionaryInterface<K, V>, Serializ
 	 * 错！！！这样做是没有意义的，因为Entry是一个内部类，在其它类的是访问不到它的。
 	 * 因而也就不能在其他类中遍历Entry类的对象了
 	 */
-	private class EntryIterator<Entry> implements Iterator<Entry>, Serializable{
+	private class EntryIterator<En> implements Iterator<En>, Serializable{
 		private int nextIndex;//标记当前正在遍历的元素
 		
 		private EntryIterator(){
 			nextIndex = 0;
 		}
-		@Override
+
 		public boolean hasNext() {
 			return nextIndex < currentSize;
 		}
-		@Override
-		public Entry next() {
+
+		public En next() {
 			if(hasNext()){
-				Entry result = (Entry) dictionary[nextIndex];//将泛型的Entry转换为非泛型的Entry???
+				En result = (En) dictionary[nextIndex];//将泛型的Entry转换为非泛型的Entry???
 				nextIndex++;
 				return result;
 			}
 			else
 				throw new NoSuchElementException();
 		}
-		@Override
+
 		public void remove() {
 			// TODO Auto-generated method stub
 			throw new UnsupportedOperationException();
