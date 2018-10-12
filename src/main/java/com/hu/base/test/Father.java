@@ -4,15 +4,20 @@ package com.hu.base.test;
  * @Author hutiantian
  * @Date 2018/10/9 16:22:36
  */
-public class Father {
-    static{
-        System.out.println("father static");
+public class Father implements Cloneable{
+    void testDefault(){
+        System.out.println("default method");
     }
 
-    Father(){
-        System.out.println("father construct");
+    protected void testProtected(){
+        System.out.println("protect method");
     }
-    {
-        System.out.println("father nonStruct");
+
+    public void testPublic(){
+        System.out.println("pub");
+    }
+
+    public Object clone() throws CloneNotSupportedException{
+        return super.clone();
     }
 }
