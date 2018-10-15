@@ -38,7 +38,7 @@ public class InsertSort {
      * 思路：直接插入排序是从后往前一个个判断，并一次次移动元素x；
      * 二分插入可以从有序的中间开始判断，确定x在有序数组的位置，
      * 整体一次性往后移动大于x的有序数组，然后将x插入
-     *
+     * <p>
      * 特点：没有减少时间复杂度，对基本有序（增序）的反而会降低效率。
      */
     public static void binaryInsertSort(int a[]) throws Exception {
