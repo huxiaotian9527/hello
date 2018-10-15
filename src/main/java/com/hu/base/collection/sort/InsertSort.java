@@ -1,5 +1,7 @@
 package com.hu.base.collection.sort;
 
+import java.util.Arrays;
+
 /**
  * 插入排序
  *
@@ -69,7 +71,7 @@ public class InsertSort {
         int[] a = {2, 3, 5, 7, 9, 10, 1};
         insertSort(a);
 //        binaryInsertSort(a);
-        CommonSortUtil.print(a);
+        System.out.println(Arrays.toString(a));
     }
 
 

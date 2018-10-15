@@ -15,6 +15,10 @@ public class CommonSortUtil {
         a[j] = temp;
     }
 
+    /**
+     * 不用了，用Arrays.toString(object[] o);
+     */
+    @Deprecated
     public static void print(int a[]){
         for(int i:a){
             System.out.print(i+"  ");

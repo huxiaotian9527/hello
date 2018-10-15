@@ -1,5 +1,7 @@
 package com.hu.base.collection.sort;
 
+import java.util.Arrays;
+
 /**
  * 简单选择排序
  * @Author hutiantian
@@ -40,7 +42,7 @@ public class SelectSort {
     public static void main(String[] args) throws Exception{
         int[] a = {8,5,3,6,8,9,2,1,55,5};
         selectSort(a);
-        CommonSortUtil.print(a);
+        System.out.println(Arrays.toString(a));
     }
 
 }

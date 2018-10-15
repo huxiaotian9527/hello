@@ -17,8 +17,10 @@ public class Test implements Cloneable{
 
 
     public static void main(String[] args) throws Exception {
-        Long ss = new Long(550);
-        System.out.println(ss.toString());
+        int a = 5;
+        int b = ++a;
+        System.out.println(b);
+        System.out.println(a);
     }
 
 
