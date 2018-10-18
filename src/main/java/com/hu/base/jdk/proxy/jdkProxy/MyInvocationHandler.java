@@ -9,20 +9,20 @@ import java.lang.reflect.Method;
  * @filename MyInvocationHandler.java
  */
 public class MyInvocationHandler implements InvocationHandler{
-//	private Object target;  
-//
-//	MyInvocationHandler(Object target) {  
-//		this.target = target;  
-//	} 
+	private Object target;
+
+	public MyInvocationHandler(Object target) {
+		this.target = target;
+	}
 
 	public Object invoke(Object o, Method method, Object[] args) throws Throwable {  
 		if("getName".equals(method.getName())){  
 			System.out.println("before " + method.getName());  
-			Object result = method.invoke(o, args);  
+			Object result = method.invoke(target, args);
 			System.out.println("after " + method.getName());  
 			return result;  
 		}else{  
-			Object result = method.invoke(o, args);  
+			Object result = method.invoke(target, args);
 			return result;  
 		}  
 

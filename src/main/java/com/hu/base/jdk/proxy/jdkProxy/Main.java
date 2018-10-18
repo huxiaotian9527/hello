@@ -15,7 +15,7 @@ import java.lang.reflect.Proxy;
 public class Main {
 	public static void main(String[] args) {  
 		StudentService userService = new StudentServiceImp();
-		InvocationHandler invocationHandler = new com.hu.base.jdk.proxy.jdkProxy.MyInvocationHandler();
+		InvocationHandler invocationHandler = new MyInvocationHandler(userService);
 		StudentService userServiceProxy = (StudentService)Proxy.newProxyInstance(userService.getClass().getClassLoader(),  
 				userService.getClass().getInterfaces(), invocationHandler);  
 		System.out.println(userServiceProxy.getName());  
