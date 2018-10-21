@@ -6,6 +6,13 @@ package com.hu.base.design;
  * @Date 2018/10/18 9:05:58
  */
 public class Singleton {
+    /**
+     * volatile的作用是禁止指令优化
+     * 避免第一个线程在new Singleton的过程中
+     * 1.分配地址 2 赋值 3 将地址引用赋给形参
+     * cpu指令重排序后 singleton!=null 但是因引用没有值
+     * 第二个线程判断非空，就i直接拿到这个没有赋值的引用地址
+     */
     private static volatile Singleton singleton;         //单例模式的实例
 
     private Singleton() {                                //私有构造方法

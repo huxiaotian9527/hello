@@ -43,7 +43,9 @@ public class DebtHttpRequest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			httpPost.releaseConnection();
+			if(httpPost!=null){
+				httpPost.releaseConnection();
+			}
 		}
 		return result;
 	}

@@ -8,17 +8,14 @@ import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.RenderListener;
 import com.itextpdf.text.pdf.parser.TextRenderInfo;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
  * @Author hutiantian
  * @Date 2018/9/17 9:52:00
  */
-public class Demo {
+public class Demo1 {
     private static int i = 0;
 
     private static float defaultH = 12;        //出现无法取到值的情况，默认为12
@@ -26,20 +23,26 @@ public class Demo {
     private static float width = 1000;        //需要替换的长度
 
     public static void main(String[] args) throws Exception {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();       //字节流
+
         String originPDF = "D:\\原始合同.pdf";
-        String handlePDF = "D:\\替换关键字之后的合同.pdf";
-        manipulatePdf(originPDF, handlePDF);
-        String changePDF = "D:\\截取前几页的合同.pdf";
-        String tablePDF = "D:\\新生成的出界人清单合同.pdf";
-        PdfReader reader = new PdfReader(handlePDF);
+        manipulatePdf(readFile(originPDF), baos);
+        PdfReader reader = new PdfReader(baos.toByteArray());
         int num = reader.getNumberOfPages();        //合同总合同
         reader.selectPages(getPages(num));          //截取前n-1页
-        PdfStamper stamp = new PdfStamper(reader, new FileOutputStream(changePDF));
+        ByteArrayOutputStream baos1 = new ByteArrayOutputStream();       //字节流
+        PdfStamper stamp = new PdfStamper(reader, baos1);
         stamp.close();
         reader.close();
-        newTablePDF(tablePDF);
+        ByteArrayOutputStream baos2 = new ByteArrayOutputStream();       //字节流
+        newTablePDF(baos2);
+        ByteArrayOutputStream baos3 = new ByteArrayOutputStream();       //字节流
         //将截取的合同与新生成的合同拼接
-        mergePdf(changePDF, tablePDF, "D:\\最终合同.pdf");
+        mergePdf1(baos1.toByteArray(), baos2.toByteArray(), baos3);
+        System.out.println(baos3.size());
+        FileOutputStream fos = new FileOutputStream("D:\\baos合同.pdf");
+        fos.write(baos3.toByteArray());
+        fos.close();
     }
 
     /**
@@ -64,12 +67,32 @@ public class Demo {
     }
 
     /**
+     * 将合同 B 追加至合同 A
+     *
+     * @param fileA     合同 A
+     * @param fileB     合同 B
+     * @param finalFile 合同 A+B
+     */
+    public static void mergePdf1(byte[] fileA, byte[] fileB, OutputStream os) throws Exception {
+        byte[][] files = {fileA, fileB};
+        Document pDFCombineUsingJava = new Document();
+        PdfCopy copy = new PdfCopy(pDFCombineUsingJava, os);
+        pDFCombineUsingJava.open();
+        PdfReader ReadInputPDF;
+        for (int i = 0; i < files.length; i++) {
+            ReadInputPDF = new PdfReader(files[i]);
+            copy.addDocument(ReadInputPDF);
+            copy.freeReader(ReadInputPDF);
+        }
+        pDFCombineUsingJava.close();
+    }
+
+    /**
      * 新生成一个带出借人清单表格的合同
      */
-    public static void newTablePDF(String file) throws Exception {
-        FileOutputStream outputStream = new FileOutputStream(file);
+    public static void newTablePDF(OutputStream os) throws Exception {
         Document document = new Document();
-        PdfWriter.getInstance(document, outputStream);
+        PdfWriter.getInstance(document, os);
         document.open();
         BaseFont bf = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.EMBEDDED);
         Font font = new Font(bf, 13, Font.NORMAL);
@@ -127,9 +150,9 @@ public class Demo {
      * @throws IOException
      * @throws DocumentException
      */
-    public static void manipulatePdf(String src, String dest) throws Exception {
+    public static void manipulatePdf(byte[] b,OutputStream os) throws Exception {
 
-        PdfReader reader = new PdfReader(readFile(src));
+        PdfReader reader = new PdfReader(b);
         //返回关键字所在的坐标和页数
         ArrayList<float[]> list = getKeyWords(reader, "合同编号");
         //如果没有，不处理直接退出
@@ -138,8 +161,7 @@ public class Demo {
         }
         //默认取第一页
         float[] result = list.get(0);
-        FileOutputStream outputStream = new FileOutputStream(dest);
-        PdfStamper stamper = new PdfStamper(reader, outputStream);
+        PdfStamper stamper = new PdfStamper(reader, os);
         PdfContentByte canvas = stamper.getOverContent((int) result[0]);
         canvas.saveState();
         canvas.setColorFill(BaseColor.WHITE);
@@ -149,7 +171,7 @@ public class Demo {
         //开始写入文本
         canvas.beginText();
         //创建字体
-        BaseFont bf = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
+        BaseFont bf = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.EMBEDDED);
         //字体大小
         int size = 10;
         Font font = new Font(bf, size, Font.NORMAL);
@@ -173,7 +195,7 @@ public class Demo {
         int pageNum = pdfReader.getNumberOfPages();
         PdfReaderContentParser pdfReaderContentParser = new PdfReaderContentParser(pdfReader);
         // 下标从1开始
-        for (i = 1; i <= pageNum; i++) {
+        for (i = 1; i < pageNum; i++) {
             pdfReaderContentParser.processContent(i, new RenderListener() {
                 public void renderText(TextRenderInfo textRenderInfo) {
                     String text = textRenderInfo.getText();
