@@ -39,9 +39,10 @@ public class Test {
             list.add("suishou0000198788");
         }
 
-
+        long startTime = System.currentTimeMillis();
         ByteArrayOutputStream bao = PdfUtil.handler(new FileInputStream("D:\\原始合同.pdf"),measure,list);
-
+        long endTime = System.currentTimeMillis();
+        System.out.println("花费的时间为："+(endTime-startTime)+"ms");
 
 
         FileOutputStream fos = new FileOutputStream("D:\\pdfUtil.pdf");

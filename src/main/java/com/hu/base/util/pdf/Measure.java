@@ -10,6 +10,7 @@ import lombok.Data;
 @Data
 public class Measure {
 
+    /*-----------------------------合同编号替换处理----------------------------------------------------*/
     private String replaceName = "合同编号";       //需要替换的关键字(合同编号)
 
     private String afterName = "合同编号：123456";        //替换后的关键字（合同编号+"13456..."）
@@ -24,14 +25,15 @@ public class Measure {
 
     private float replaceWidth = 1000;       //替换关键字的长度，参考值：1000
 
+
+    /*-----------------------------出借人清单追加处理---------------------------------------------------*/
     private String loanName = "出借人清单";       //需要替换的关键字(合同编号)
 
     private int loanPage = -1;             //关键字所在页，如果为-1，则取最后一页
 
     private int loanIndex = -1;         //匹配到多个的时候，替换第几个关键字，一般为第一个（下标为0的），若为小于0，则匹配最后一个
 
-//    private StrategyEnum strategy= StrategyEnum.REPLACE;        //默认为替换策略
-    private StrategyEnum strategy= StrategyEnum.NEW;
+    private StrategyEnum strategy= StrategyEnum.REPLACE;        //默认为替换策略
 
     private Coordinate.C2 rePageLast = new Coordinate.C2(38,50,559,0);    //最后一页要追加的矩形（y2会重新赋值）
 
@@ -41,4 +43,9 @@ public class Measure {
 
     private Coordinate.C2 rePageNew = new Coordinate.C2(38,50,559,806);     //新的页要追加的矩形
 
+
+
+    /*-----------------------------身份证账号替换*号处理-------------------------------------------------*/
+
+    private CertNoConfig[] configs = {new CertNoConfig(),new CertNoConfig(4)};
 }
