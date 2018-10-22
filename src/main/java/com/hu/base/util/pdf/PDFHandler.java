@@ -1,12 +1,8 @@
 package com.hu.base.util.pdf;
 
-import com.itextpdf.awt.geom.Rectangle2D;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
-import com.itextpdf.text.pdf.parser.ImageRenderInfo;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
-import com.itextpdf.text.pdf.parser.RenderListener;
-import com.itextpdf.text.pdf.parser.TextRenderInfo;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -31,30 +27,31 @@ public class PDFHandler {
         final ArrayList<Coordinate> list = new ArrayList<Coordinate>();
         try {
             PdfReaderContentParser pdfReaderContentParser = new PdfReaderContentParser(pdfReader);
-            pdfReaderContentParser.processContent(num, new RenderListener() {
-                public void renderText(TextRenderInfo textRenderInfo) {
-                    String text = textRenderInfo.getText();
-                    if (null != text && text.contains(key)) {
-                        Rectangle2D.Float boundingRectangle = textRenderInfo.getBaseline().getBoundingRectange();
-                        Coordinate coordinate = new Coordinate();
-                        coordinate.setX(boundingRectangle.x);
-                        coordinate.setY(boundingRectangle.y - fixHeight);
-                        coordinate.setWidth(boundingRectangle.width);
-                        coordinate.setHeight(boundingRectangle.height == 0 ? defaultH : boundingRectangle.height);
-                        list.add(coordinate);
-                    }
-                }
-
-                public void renderImage(ImageRenderInfo arg0) {
-                }
-
-                public void endTextBlock() {
-                }
-
-                public void beginTextBlock() {
-                }
-            });
-        } catch (IOException e) {
+            throw new Exception();
+//            pdfReaderContentParser.processContent(num, new RenderListener() {
+//                public void renderText(TextRenderInfo textRenderInfo) {
+//                    String text = textRenderInfo.getText();
+//                    if (null != text && text.contains(key)) {
+//                        Rectangle2D.Float boundingRectangle = textRenderInfo.getBaseline().getBoundingRectange();
+//                        Coordinate coordinate = new Coordinate();
+//                        coordinate.setX(boundingRectangle.x);
+//                        coordinate.setY(boundingRectangle.y - fixHeight);
+//                        coordinate.setWidth(boundingRectangle.width);
+//                        coordinate.setHeight(boundingRectangle.height == 0 ? defaultH : boundingRectangle.height);
+//                        list.add(coordinate);
+//                    }
+//                }
+//
+//                public void renderImage(ImageRenderInfo arg0) {
+//                }
+//
+//                public void endTextBlock() {
+//                }
+//
+//                public void beginTextBlock() {
+//                }
+//            });
+        } catch (Exception e) {
             e.printStackTrace();
         }
         if(list.size()>0){
@@ -128,33 +125,33 @@ public class PDFHandler {
     }
 
     public static void replaceKeyword(String src, String dest) throws IOException, DocumentException {
-        PdfReader reader = new PdfReader(src);
-        Coordinate coordinate = getKeyWord("合同编号：",1,reader);
-        //如果在第一页找到匹配的关键字，就替换
-        if(coordinate!=null){
-            FileOutputStream outputStream = new FileOutputStream(dest);
-            PdfStamper stamper = new PdfStamper(reader, outputStream);
-            PdfContentByte canvas = stamper.getOverContent(1);
-            canvas.saveState();
-            canvas.setColorFill(BaseColor.WHITE);
-            canvas.rectangle(coordinate.getX(), coordinate.getY(), width, coordinate.getHeight());
-            canvas.fill();
-            canvas.restoreState();
-            //开始写入文本
-            canvas.beginText();
-            //BaseFont bf = BaseFont.createFont(URLDecoder.decode(CutAndPaste.class.getResource("/AdobeSongStd-Light.otf").getFile()), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-            BaseFont bf = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.EMBEDDED);
-            Font font = new Font(bf, size, Font.NORMAL);
-            //设置字体和大小
-            canvas.setFontAndSize(font.getBaseFont(), size);
-            //设置字体的输出位置
-            canvas.setTextMatrix(coordinate.getX(), coordinate.getY() - fixHeight);
-            //要输出的text
-            canvas.showText("合同编号：rpc调用后拿到的123456789");
-            canvas.endText();
-            stamper.close();
-        }
-        reader.close();
+//        PdfReader reader = new PdfReader(src);
+//        Coordinate coordinate = getKeyWord("合同编号：",1,reader);
+//        //如果在第一页找到匹配的关键字，就替换
+//        if(coordinate!=null){
+//            FileOutputStream outputStream = new FileOutputStream(dest);
+//            PdfStamper stamper = new PdfStamper(reader, outputStream);
+//            PdfContentByte canvas = stamper.getOverContent(1);
+//            canvas.saveState();
+//            canvas.setColorFill(BaseColor.WHITE);
+//            canvas.rectangle(coordinate.getX(), coordinate.getY(), width, coordinate.getHeight());
+//            canvas.fill();
+//            canvas.restoreState();
+//            //开始写入文本
+//            canvas.beginText();
+//            //BaseFont bf = BaseFont.createFont(URLDecoder.decode(CutAndPaste.class.getResource("/AdobeSongStd-Light.otf").getFile()), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+//            BaseFont bf = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.EMBEDDED);
+//            Font font = new Font(bf, size, Font.NORMAL);
+//            //设置字体和大小
+//            canvas.setFontAndSize(font.getBaseFont(), size);
+//            //设置字体的输出位置
+//            canvas.setTextMatrix(coordinate.getX(), coordinate.getY() - fixHeight);
+//            //要输出的text
+//            canvas.showText("合同编号：rpc调用后拿到的123456789");
+//            canvas.endText();
+//            stamper.close();
+//        }
+//        reader.close();
     }
 
     public static void appendLoanTable(String src, String dest) throws Exception {
@@ -191,11 +188,11 @@ public class PDFHandler {
             PdfContentByte canvas = column.getCanvas();
             canvas.saveState();
             canvas.setColorFill(BaseColor.WHITE);
-            canvas.rectangle(0, 0, width, coordinate.getY()+30);
+//            canvas.rectangle(0, 0, width, coordinate.getY()+30);
             canvas.fill();
             canvas.restoreState();
-            Rectangle rectPage1 = new Rectangle(38, 100, 559, coordinate.getY()+15);
-            column.setSimpleColumn(rectPage1);
+//            Rectangle rectPage1 = new Rectangle(38, 100, 559, coordinate.getY()+15);
+//            column.setSimpleColumn(rectPage1);
             column.addElement(table);
             Rectangle rectPage2 = new Rectangle(38, 100, 559, 806);
             int status = column.go();

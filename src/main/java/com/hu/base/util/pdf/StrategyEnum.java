@@ -8,18 +8,14 @@ package com.hu.base.util.pdf;
 public enum StrategyEnum {
 
     /**
-     * 直接生成新的sheet页面
+     * 直接生成新的sheet页
+     * 注：NEW模式不会查找替换出借人清单，确定机构不会生成出借人清单的采用这种模式
      */
     NEW,
 
     /**
-     * 根据坐标替换源文件的出借人清单，并生成新的清单覆盖
+     * 根据坐标替换源文件的出借人清单，生成新的清单覆盖
      */
     REPLACE,
-
-    /**
-     * 删除出借人清单所在页，之后在生成新的sheet页
-     */
-    DELETE
 
 }
