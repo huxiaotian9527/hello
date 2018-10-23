@@ -13,7 +13,7 @@ public class Measure {
     /*-----------------------------合同编号替换处理----------------------------------------------------*/
     private String replaceName = "合同编号";       //需要替换的关键字(合同编号)
 
-    private String afterName = "合同编号：123456";        //替换后的关键字（合同编号+"13456..."）
+    private String afterName = "合同编号：";        //替换后的关键字（合同编号+"13456..."）
 
     private int findPage = 1;             //关键字所在页
 
@@ -25,8 +25,16 @@ public class Measure {
 
     private float replaceWidth = 1000;       //替换关键字的长度，参考值：1000
 
+    private int conFontSize = 12;            //替换后的字体大小默认12
+
+    private int xOffset = 0;                //关键字x坐标偏移量，匹配的时候可能会匹配空格，实际坐标需要调整，不需要调整则0
+
+    private int beforeXOffset = 0;          //关键字x坐标偏移量，（什马合同）覆盖可能需要用到
+
 
     /*-----------------------------出借人清单追加处理---------------------------------------------------*/
+    private boolean loanFlag = true;            //是否需要替换借款人清单（达飞的机构不需要替换出借人清单）
+
     private String loanName = "出借人清单";       //需要替换的关键字(合同编号)
 
     private int loanPage = -1;             //关键字所在页，如果为-1，则取最后一页
@@ -41,11 +49,11 @@ public class Measure {
 
     private float newLoanHeight = 15;       //新生成的表格修正高度（可以将表格适当的往下移）
 
-    private Coordinate.C2 rePageNew = new Coordinate.C2(38,50,559,806);     //新的页要追加的矩形
+    private Coordinate.C2 rePageNew = new Coordinate.C2(38,50,559,700);     //新的页要追加的矩形
 
 
 
     /*-----------------------------身份证账号替换*号处理-------------------------------------------------*/
 
-    private CertNoConfig[] configs = {new CertNoConfig(),new CertNoConfig(4)};
+    private CertNoConfig[] configs;
 }

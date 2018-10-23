@@ -27,26 +27,33 @@ public class PdfUtil {
     private static final String FONT_NAME = "STSong-Light";                 //字体名称
     private static final String FONT_ENCODING = "UniGB-UCS2-H";             //字体编码
     private static final boolean FONT_EMBEDDED = true;                      //是否嵌套
-    private static final int FONT_SIZE = 12;                                //字体大小
 
     /**
      * 根据measure，差异化处理pdf文件
      *
-     * @param is       要处理的pdf输入流
-     * @param measure  处理策略，根据不同的机构会有不一样的策略
-     * @param loanList 需要追加的出借人清单列表
+     * @param is         要处理的pdf输入流
+     * @param orgNo      机构号
+     * @param contractNo 合同号
+     * @param loanList   需要追加的出借人清单列表
      * @return 处理后的pdf字节流
      */
-    public static ByteArrayOutputStream handler(InputStream is, Measure measure, List<String> loanList) {
+    public static ByteArrayOutputStream handler(InputStream is, String orgNo, String contractNo, List<String> loanList) {
+        //TODO 非空校验
+        Measure measure = MeasureTool.getMeasure(orgNo);
+        if(measure==null){          //非法机构号
+            log.error("机构号不存在！");
+            return null;
+        }
+        measure.setAfterName(measure.getAfterName()+contractNo);
         try {
             //1.替换合同编号
             ByteArrayOutputStream afterContractBao = replaceContractNo(is, measure);           //替换后的字节流
 
-            //2.身份证号脱敏
-            ByteArrayOutputStream afterCertBao = replaceCertNo(afterContractBao, measure);
+            //2.身份证号脱敏(身份证不需要脱敏)
+//            ByteArrayOutputStream afterCertBao = replaceCertNo(afterContractBao, measure);
 
             //3.追加出借人清单
-            return linkLoanList(afterCertBao, measure, loanList);
+            return linkLoanList(afterContractBao, measure, loanList);
 
         } catch (Exception e) {
             log.error("pdf合同转换处理失败!", e);
@@ -84,7 +91,8 @@ public class PdfUtil {
         PdfContentByte canvas = stamper.getOverContent(measure.getFindPage());
         canvas.saveState();
         canvas.setColorFill(BaseColor.WHITE);
-        canvas.rectangle(coordinate.getC1().getX(), coordinate.getC1().getY(), measure.getReplaceWidth(), coordinate.getC1().getHeight());
+        canvas.rectangle(coordinate.getC1().getX()+measure.getBeforeXOffset(), coordinate.getC1().getY(),
+                            measure.getReplaceWidth(), coordinate.getC1().getHeight());
         canvas.fill();
         canvas.restoreState();
         //开始写入文本
@@ -92,11 +100,11 @@ public class PdfUtil {
         //创建字体
         BaseFont bf = BaseFont.createFont(FONT_NAME, FONT_ENCODING, FONT_EMBEDDED);
         //字体大小
-        Font font = new Font(bf, FONT_SIZE, Font.NORMAL);
+        Font font = new Font(bf, measure.getConFontSize(), Font.NORMAL);
         //设置字体和大小
-        canvas.setFontAndSize(font.getBaseFont(), FONT_SIZE);
+        canvas.setFontAndSize(font.getBaseFont(), measure.getConFontSize());
         //设置字体的输出位置
-        canvas.setTextMatrix(coordinate.getC1().getX(), coordinate.getC1().getY());
+        canvas.setTextMatrix(coordinate.getC1().getX() + measure.getXOffset(), coordinate.getC1().getY());
         //要输出的text
         canvas.showText(measure.getAfterName());
         canvas.endText();
@@ -109,14 +117,14 @@ public class PdfUtil {
     /**
      * 替换身份证所在行，如果没有匹配到关键字，则不替换
      */
-    private static ByteArrayOutputStream replaceCertNo(ByteArrayOutputStream baos, Measure measure1) throws Exception {
+    private static ByteArrayOutputStream replaceCertNo(ByteArrayOutputStream baos, Measure measure) throws Exception {
         byte[] bytes = baos.toByteArray();
         PdfReader reader = new PdfReader(bytes);
         ByteArrayOutputStream bao = new ByteArrayOutputStream();
         PdfStamper stamper = new PdfStamper(reader, bao);
-        for(CertNoConfig config:measure1.getConfigs()){
+        for (CertNoConfig config : measure.getConfigs()) {
             //返回关键字所在的坐标
-            List<Coordinate> list = getKeyWords(reader, config.getPage() , config.getName(),
+            List<Coordinate> list = getKeyWords(reader, config.getPage(), config.getName(),
                     config.getFixHeight(), config.getDefaultHeight());
             if (list == null || list.size() == 0) {
                 continue;
@@ -129,7 +137,7 @@ public class PdfUtil {
             PdfContentByte canvas = stamper.getOverContent(config.getPage());
             canvas.saveState();
             canvas.setColorFill(BaseColor.WHITE);
-            canvas.rectangle(coordinate.getC1().getX()+config.getXOffset(), coordinate.getC1().getY(), config.getWidth(), coordinate.getC1().getHeight());
+            canvas.rectangle(coordinate.getC1().getX() + config.getXOffset(), coordinate.getC1().getY(), config.getWidth(), coordinate.getC1().getHeight());
             canvas.fill();
             canvas.restoreState();
             //开始写入文本
@@ -141,7 +149,7 @@ public class PdfUtil {
             //设置字体和大小
             canvas.setFontAndSize(font.getBaseFont(), config.getFontSize());
             //设置字体的输出位置
-            canvas.setTextMatrix(coordinate.getC1().getX()+config.getXOffset(), coordinate.getC1().getY()+config.getYOffset());
+            canvas.setTextMatrix(coordinate.getC1().getX() + config.getXOffset(), coordinate.getC1().getY() + config.getYOffset());
             //要输出的text
             canvas.showText(config.getText());
             canvas.endText();
@@ -254,11 +262,13 @@ public class PdfUtil {
     private static ByteArrayOutputStream replaceOrNewMode(ByteArrayOutputStream bao, Measure measure, List<String> loanList, int type) throws Exception {
         PdfReader reader = new PdfReader(bao.toByteArray());        //拿到pdfReader
         int pageCount = reader.getNumberOfPages();                  //pdf总页数
-        Rectangle pageSize = reader.getPageSize(pageCount);
+        if(measure.getLoanPage() < 0 ){
+            measure.setLoanPage(pageCount);
+        }
         //新建结果bao
         ByteArrayOutputStream resultBao = new ByteArrayOutputStream();
         PdfStamper stamper = new PdfStamper(reader, resultBao);
-        ColumnText column = new ColumnText(stamper.getOverContent(pageCount));  //追加
+        ColumnText column = new ColumnText(stamper.getOverContent(measure.getLoanPage()));  //追加
         //生成借款人PdfPTable
         PdfPTable table = generateLoanTable(loanList);
         Rectangle rectPage1;                                    //当前页坐标
@@ -266,7 +276,7 @@ public class PdfUtil {
             rectPage1 = new Rectangle(0, 0, 1, 1);
         } else {                                                 //REPLACE模式，在当前页追加
             //查找关键字所在的坐标
-            List<Coordinate> list = getKeyWords(reader, measure.getLoanPage() < 0 ? pageCount : measure.getLoanPage(), measure.getLoanName(),
+            List<Coordinate> list = getKeyWords(reader, measure.getLoanPage(), measure.getLoanName(),
                     measure.getFixHeight(), measure.getDefaultHeight());
             //如果没有找到，则使用StrategyEnum.NEW策略
             if (list == null || list.size() == 0) {
@@ -294,6 +304,8 @@ public class PdfUtil {
         Rectangle rectPage2 = new Rectangle(measure.getRePageNew().getX1(), measure.getRePageNew().getY1(),
                 measure.getRePageNew().getX2(), measure.getRePageNew().getY2());
         int status = column.go();
+        Rectangle pageSize = reader.getPageSize(measure.getLoanPage());
+        pageCount = measure.getLoanPage();
         while (ColumnText.hasMoreText(status)) {
             status = triggerNewPage(stamper, pageSize, column, rectPage2, ++pageCount);
         }
