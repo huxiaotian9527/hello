@@ -8,14 +8,14 @@ package com.hu.base.jdk.thread;
  */
 public class ThreadLocalDemo implements Runnable{
 	//通过匿名类部类覆盖ThreadLocal种的initialValue()方法，指定初始值（不覆盖默认初始值为null）
-	private final ThreadLocal<Integer> localNum = new ThreadLocal<Integer>(){
+	private static final ThreadLocal<Integer> localNum = new ThreadLocal<Integer>(){
 		protected Integer initialValue() {
 			return 0;
 		}
 	};
 
 	public void run(){
-		for(int i=0;i<10;i++){
+		for(int i=0;i<1000;i++){
 			localNum.set(localNum.get()+1);
 			System.out.println(Thread.currentThread().getName()+": "+localNum.get());
 		}

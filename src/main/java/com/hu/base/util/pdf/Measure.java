@@ -1,5 +1,6 @@
 package com.hu.base.util.pdf;
 
+import com.hu.base.util.NewPdf.StrategyEnum;
 import lombok.Data;
 
 /**

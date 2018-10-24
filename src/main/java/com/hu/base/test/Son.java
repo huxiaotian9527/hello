@@ -5,19 +5,19 @@ package com.hu.base.test;
  * @Date 2018/10/9 16:23:59
  */
 public class Son extends Father {
-    static{
-        System.out.println("son static");
-    }
+    private String ss ;
 
-    {
-        System.out.println("son nonStatic");
-    }
+    private Son(){}
 
-    Son(){
-        System.out.println("son Construct");
+    public Son(String str){
+
     }
 
     public static void main(String[] args) {
-        new Son();
+        new Runnable(){
+            public void run(){
+                System.out.println("haha");
+            }
+        }.run();
     }
 }
