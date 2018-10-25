@@ -8,7 +8,8 @@ package com.hu.base.jdk.thread;
  */
 public class ObjectWaitTest {
 	public void waitTest(){
-		synchronized(this){
+		Thread a = new Thread();
+		synchronized(a){
 			System.out.println("I am in synchronized method");
 			try {
 				this.wait();
@@ -32,7 +33,7 @@ public class ObjectWaitTest {
 			e.printStackTrace();
 		}
 		System.out.println(t1.isAlive());
-		t1.interrupt();
+//		t1.interrupt();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {

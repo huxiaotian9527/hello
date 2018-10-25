@@ -21,11 +21,11 @@ public class ThreadJoinTest implements Runnable{
 		Thread t = new Thread(new ThreadJoinTest());
 		Long stime = System.currentTimeMillis();
 		t.start();
-		try {
-			t.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			t.join();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 		System.out.println(System.currentTimeMillis()-stime);
 		System.out.println("main finished");
 	}

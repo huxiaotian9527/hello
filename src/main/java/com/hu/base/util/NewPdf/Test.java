@@ -21,7 +21,7 @@ public class Test {
             list.add("suishou0000198788");
         }
 
-        long startTime = System.currentTimeMillis();
+
         String fileName = "";
         File files = new File("D:\\");
         for(File f :files.listFiles()){
@@ -63,6 +63,7 @@ public class Test {
                 orgNo = "";
                 break;
         }
+        long startTime = System.currentTimeMillis();
         ByteArrayOutputStream bao = PdfUtil.handler(new FileInputStream("D:\\"+fileName+".pdf"),orgNo,list);
         long endTime = System.currentTimeMillis();
         System.out.println("花费的时间为："+(endTime-startTime)+"ms");

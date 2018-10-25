@@ -5,6 +5,7 @@ package com.hu.base.test;
  * @Date 2018/10/9 16:23:59
  */
 public class Son extends Father {
+    static final Object object = new Object();
     private String ss ;
 
     private Son(){}
@@ -14,10 +15,7 @@ public class Son extends Father {
     }
 
     public static void main(String[] args) {
-        new Runnable(){
-            public void run(){
-                System.out.println("haha");
-            }
-        }.run();
+
+
     }
 }
