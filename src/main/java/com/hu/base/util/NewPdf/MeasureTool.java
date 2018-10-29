@@ -17,8 +17,7 @@ public class MeasureTool {
         }
         measure = new Measure();
         switch (orgNo){
-            case "C0035":               //达菲
-                measure.setLoanPage(5);
+            case "C0024":               //达菲
                 measure.setLoanFlag(false);
                 break;
             case "C0021":               //功夫贷
@@ -34,10 +33,9 @@ public class MeasureTool {
                 break;
             case "C13":               //美利
                 break;
-            case "x":                   //什马
+            case "C0019":                //什马
                 break;
             case "30587853-5":          //我来贷
-//                measure.setLoanPage(9);
                 measure.setExtractFlag(true);
                 break;
             default:
