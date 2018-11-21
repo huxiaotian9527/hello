@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @Author hutiantian
  * @Date 2018/9/18 15:27:33
@@ -17,8 +20,10 @@ public class Test implements Cloneable {
 
 
     public static void main(String[] args) throws Exception {
-        System.out.println(String.format("%05d",25));
-
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String endDate = sdf.format(date);
+        System.out.println(endDate);
     }
 
 

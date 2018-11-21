@@ -16,6 +16,9 @@ public class CallableDemo {
             long sum = 0;
             for (int i = 0; i < 100; i++) {
                 sum += i;
+                try{
+                    Thread.sleep(100);
+                }catch (Exception e){}
             }
 
             return sum;
