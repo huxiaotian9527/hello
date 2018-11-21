@@ -11,7 +11,7 @@ import java.nio.channels.*;
 import java.util.Iterator;
 
 /**
- * @author hutiantian
+ * @author yinwenjie
  * @date: 2018/10/29 0:02
  * @since 1.0.0
  */
@@ -52,7 +52,7 @@ public class NioServerSocket {
                     //待到下一次selector.select() > 0时，这个readyKey又会被处理一次
                     selecionKeys.remove();
 
-                    SelectableChannel selectableChannel = readyKey.channel();
+//                    SelectableChannel selectableChannel = readyKey.channel();
                     if(readyKey.isValid() && readyKey.isAcceptable()) {
                         log.info("======channel通道已经准备好=======");
                         /*
@@ -60,7 +60,7 @@ public class NioServerSocket {
                          * 拿到socket channel后，要做的事情就是马上到selector注册这个socket channel感兴趣的事情。
                          * 否则无法监听到这个socket channel到达的数据
                          * */
-                        ServerSocketChannel serverSocketChannel = (ServerSocketChannel)selectableChannel;
+                        ServerSocketChannel serverSocketChannel = (ServerSocketChannel)(readyKey.channel());
                         SocketChannel socketChannel = serverSocketChannel.accept();
                         registerSocketChannel(socketChannel , selector);
 
