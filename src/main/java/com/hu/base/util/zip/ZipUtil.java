@@ -3,6 +3,7 @@ package com.hu.base.util.zip;
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipOutputStream;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -64,15 +65,25 @@ public class ZipUtil {
 //            ex.printStackTrace();
 //        }
 
-        File file = new File("D:\\a.txt");
-        System.out.println(file.getName());
-        FileOutputStream fos = new FileOutputStream(file);
-        fos.write(new byte[]{1,2,3,4,});
-        fos.flush();
-        fos.close();
-
+        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+        ZipOutputStream out = new ZipOutputStream(bao);
+        out.setEncoding(System.getProperty("sun.jnu.encoding"));
+        out.putNextEntry(new ZipEntry("测试.doc"));
+        byte[] bytes = getFile();
+        out.write(new byte[0]);
+        out.close();
+        FileOutputStream os = new FileOutputStream("D:\\1.zip");
+        os.write(bao.toByteArray());
     }
 
-
+    private static byte[] getFile() throws Exception{
+        FileInputStream fis = new FileInputStream(new File("D:\\字段取值详细说明1122.doc"));
+        byte[] bytes = new byte[1024*1024];
+        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+        int a = fis.read(bytes);
+        bao.write(bytes,0,a);
+        fis.close();
+        return bao.toByteArray();
+    }
 
 }
