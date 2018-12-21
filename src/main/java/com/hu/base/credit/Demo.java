@@ -25,7 +25,7 @@ public class Demo {
 	
 	//接口方式上报的客户端代码
 	public static void interfaceUploadClient() throws Exception{
-		//RSA公钥文件路径（百行提供公钥文件）
+		//RSA公钥文件路径
 		String RSA_PUBLIC_KEY = "d:\\rsa_public_key.pem";
 
 		InterfaceUploadRequest req = new InterfaceUploadRequest();

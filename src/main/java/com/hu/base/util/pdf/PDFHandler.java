@@ -163,19 +163,7 @@ public class PDFHandler {
         list.add("测试张三");
         list.add("420607199305068981");
         list.add("10,005.00");
-        list.add("suishou0000198786");
-        list.add("测试李四");
-        list.add("420607199305068981");
-        list.add("18,225.88");
-        list.add("suishou0000198788");
-        list.add("测试哈哈");
-        list.add("420607199305068981");
-        list.add("18,888.88");
-        list.add("suishou0000198788");
-        list.add("哈哈");
-        list.add("420607199305068981");
-        list.add("18,225.88");
-        list.add("suishou0000198788");
+        list.add("0000198786");
         for (int i = 0; i < 100; i++) {
             list.add("12345678");
         }
