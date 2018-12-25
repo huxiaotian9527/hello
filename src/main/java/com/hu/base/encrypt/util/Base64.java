@@ -1,4 +1,4 @@
-package com.hu.base.credit.util;
+package com.hu.base.encrypt.util;
 
 
 /**

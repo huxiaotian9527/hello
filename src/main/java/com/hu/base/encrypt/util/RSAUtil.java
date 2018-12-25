@@ -1,6 +1,6 @@
-package com.hu.base.credit.encrypt;
+package com.hu.base.encrypt.util;
 
-import com.hu.base.credit.util.Base64;
+import com.hu.base.encrypt.util.Base64;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;

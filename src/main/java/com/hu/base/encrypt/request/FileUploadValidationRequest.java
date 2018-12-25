@@ -1,4 +1,4 @@
-package com.hu.base.credit.request;
+package com.hu.base.encrypt.request;
 
 /**
  * 文件上传数据验证请求类

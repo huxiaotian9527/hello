@@ -110,11 +110,11 @@ public class Demo1 {
         table.addCell(getPDFCell("测试张三", font));
         table.addCell(getPDFCell("420607199305068981", font));
         table.addCell(getPDFCell("10,005.00", font));
-        table.addCell(getPDFCell("suishou0000198786", font));
+        table.addCell(getPDFCell("0000198786", font));
         table.addCell(getPDFCell("测试李四", font));
         table.addCell(getPDFCell("420607199305068981", font));
         table.addCell(getPDFCell("18,225.88", font));
-        table.addCell(getPDFCell("suishou0000198788", font));
+        table.addCell(getPDFCell("0000198788", font));
         document.newPage();//新创建一页来存放后面生成的表格
         document.add(table);
         document.close();

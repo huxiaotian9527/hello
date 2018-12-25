@@ -1,4 +1,4 @@
-package com.hu.base.framework.netty;
+package com.hu.base.jdk.nio;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;

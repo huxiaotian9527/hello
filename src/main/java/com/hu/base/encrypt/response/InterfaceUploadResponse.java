@@ -1,13 +1,13 @@
-package com.hu.base.credit.response;
+package com.hu.base.encrypt.response;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 接口上传数据验证响应类
+ * 接口上传数据响应类
  *
  */
-public class InterfaceUploadValidationResponse {
+public class InterfaceUploadResponse {
 
 	/*
 	 * 是否成功
@@ -20,9 +20,9 @@ public class InterfaceUploadValidationResponse {
 	private String errorMessage = "";
 	
 	/*
-	 * 解密后的数据集合 
+	 * 加密后的数据集合
 	 */
-	private List<String> decryptData = new ArrayList<String>();
+	private List<String> encryptData = new ArrayList<String>();
 
 	public boolean isSuccess() {
 		return isSuccess;
@@ -40,15 +40,15 @@ public class InterfaceUploadValidationResponse {
 		this.errorMessage = errorMessage;
 	}
 
-	public List<String> getDecryptData() {
-		return decryptData;
+	public List<String> getEncryptData() {
+		return this.encryptData;
 	}
 
-	public void setDecryptData(List<String> decryptData) {
-		this.decryptData = decryptData;
+	public void setEncryptData(List<String> encryptData) {
+		this.encryptData = encryptData;
 	}
 	
-	public void addDecryptData(String str){
-		this.decryptData.add(str);
+	public void addEncryptData(String str) {
+		this.encryptData.add(str);
 	}
 }

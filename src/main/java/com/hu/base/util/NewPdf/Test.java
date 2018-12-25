@@ -18,7 +18,7 @@ public class Test {
             list.add("测试李四");
             list.add("420************981");
             list.add("18,225.88");
-            list.add("suishou0000198788");
+            list.add("0000198788");
         }
 
 
@@ -40,24 +40,6 @@ public class Test {
                 break;
             case "功夫贷合同":
                 orgNo = "C0021";
-                break;
-            case "厚本合同":
-                orgNo = "C0018";
-                break;
-            case "即科合同":
-                orgNo = "C0023";
-                break;
-            case "买单侠合同":
-                orgNo = "C0011";
-                break;
-            case "美利合同":
-                orgNo = "C13";
-                break;
-            case "什马借款合同":
-                orgNo = "x";
-                break;
-            case "我来贷合同":
-                orgNo = "30587853-5";
                 break;
             default:
                 orgNo = "";

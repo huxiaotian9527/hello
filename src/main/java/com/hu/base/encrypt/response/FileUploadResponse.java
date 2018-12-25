@@ -1,4 +1,4 @@
-package com.hu.base.credit.response;
+package com.hu.base.encrypt.response;
 
 /**
  * 文件上传数据响应类

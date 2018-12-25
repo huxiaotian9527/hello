@@ -1,16 +1,16 @@
-package com.hu.base.credit.request;
+package com.hu.base.encrypt.request;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 接口上传数据验证请求类
+ * 接口上传数据请求类
  *
  */
-public class InterfaceUploadValidationRequest {
+public class InterfaceUploadRequest {
 
 	/*
-	 * 待解密的数据集合 
+	 * 待加密的数据集合 
 	 */
 	private List<String> data = new ArrayList<String>();
 

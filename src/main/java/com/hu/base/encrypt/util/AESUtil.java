@@ -1,4 +1,4 @@
-package com.hu.base.credit.encrypt;
+package com.hu.base.encrypt.util;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;

@@ -1,6 +1,6 @@
-package com.hu.base.credit.zip;
+package com.hu.base.encrypt.util;
 
-import com.hu.base.credit.response.FileUploadResponse;
+import com.hu.base.encrypt.response.FileUploadResponse;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.Expand;
 import org.apache.tools.ant.taskdefs.Zip;
