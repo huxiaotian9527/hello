@@ -1,10 +1,13 @@
 package com.hu.base.encrypt;
 
-import com.hu.base.encrypt.util.RSAUtil;
 import com.hu.base.encrypt.request.FileUploadRequest;
 import com.hu.base.encrypt.request.FileUploadValidationRequest;
 import com.hu.base.encrypt.response.FileUploadResponse;
 import com.hu.base.encrypt.response.FileUploadValidationResponse;
+import com.hu.base.encrypt.util.RSAUtil;
+
+import java.io.File;
+import java.text.DecimalFormat;
 
 /**
  * 示例代码
@@ -14,8 +17,10 @@ public class FileUploadDemo {
 
 	public static void main(String args[]) throws Exception{
 		//文件方式上报的客户端代码
-		fileUploadClient();
-		
+//		fileUploadClient();
+
+		System.out.println(readableFileSize(3812581560L));
+
 		//文件方式上报的客户端本地测试代码
 		//fileUploadValidationClient();
 
@@ -29,8 +34,9 @@ public class FileUploadDemo {
 		String AES_KEY = "123456";
 
 		FileUploadRequest req = new FileUploadRequest();
+		File file = new File("d:\\测试.txt");
 		//设置未作压缩加密前的原始数据文件路径
-		req.setDataFile("d:\\测试.txt");
+		req.setDataFile(file.getAbsolutePath());
 		//设置压缩加密后的密文文件输出路径(为空表示与原始数据文件同目录)
 		req.setTargetFilePath("d:\\");
 
@@ -66,5 +72,12 @@ public class FileUploadDemo {
 		}else{
 			System.out.println("decrypt And unzip fail;errorMessage = "+response.getErrorMessage());
 		}
+	}
+
+	public static String readableFileSize(long size) {
+		if (size <= 0) return "0";
+		final String[] units = new String[]{"B", "KB", "MB", "GB", "TB"};
+		int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
+		return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + "" + units[digitGroups];
 	}
 }

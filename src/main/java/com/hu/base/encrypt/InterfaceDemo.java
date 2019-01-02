@@ -41,7 +41,7 @@ public class InterfaceDemo {
 		req.setData(datas);
 		BhCreditApiClient client = new BhCreditApiClient();
 		//初始化设置RSA公钥
-		client.init(RSAUtil.readRSAPublicKey(RSA_PUBLIC_KEY));
+		client.init(RSAUtil.readRSAPublicKey(RSA_PUBLIC_KEY),"123456");
 		//执行加密操作
 		InterfaceUploadResponse response = client.execute(req);
 		if(response.isSuccess){
@@ -49,7 +49,7 @@ public class InterfaceDemo {
 			for(int i=0;i<data.size();i++){
 				System.out.println(data.get(i));
 			}
-//			System.out.println("encrypt success;encrypt data = "+response.getEncryptData());
+			System.out.println("encrypt success;encrypt data = "+response.getEncryptData());
 		}else{
 			System.out.println("encrypt fail;errorMessage = "+response.getErrorMessage());
 		}

@@ -169,10 +169,12 @@ public class BhCreditApiClient {
 					in.close();
 				if (pw != null)
 					pw.close();
-//				if(zipFile.exists()){
-//					zipFile.delete();
-//		        }
+				if(zipFile.exists()){
+					zipFile.delete();
+		        }
 			} catch (Exception e) {
+
+
 				e.printStackTrace();
 			}
 		}
