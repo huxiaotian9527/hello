@@ -31,7 +31,7 @@ public class Coordinate {
     public static class C2{
         private float x1;                    //A点x坐标
         private float y1;                    //A点y坐标
-        private float x2;                    //B点y坐标
+        private float x2;                    //B点x坐标
         private float y2;                    //B点y坐标
     }
 
