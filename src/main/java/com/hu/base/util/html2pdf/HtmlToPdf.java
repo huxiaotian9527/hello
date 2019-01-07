@@ -48,6 +48,8 @@ public class HtmlToPdf {
         }
         ByteArrayOutputStream bao = new ByteArrayOutputStream();
         ITextRenderer renderer = new ITextRenderer();
+        renderer.getSharedContext().setReplacedElementFactory(new Base64ImgReplacedElementFactory());
+        renderer.getSharedContext().getTextRenderer().setSmoothingThreshold(0);
         ITextFontResolver fontResolver = renderer.getFontResolver();
         // 宋体字
         fontResolver.addFont(buildAbsoluteFilePath("D:\\Arial.ttf") + SIMSUN, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
