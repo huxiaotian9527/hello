@@ -1,13 +1,8 @@
 package com.hu.base.test;
 
-import com.hu.base.util.DateFormatEnum;
-import com.hu.base.util.DateUtil;
 import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * @Author hutiantian
@@ -22,13 +17,8 @@ public class Test implements Cloneable {
 
 
     public static void main(String[] args) {
-        Date date = new Date();
-        System.out.println(date);
-        SimpleDateFormat sdf = new SimpleDateFormat(DateFormatEnum.YEAR_MONTH_DAY_HH_MM_SS.toString());
-        String endDate = sdf.format(date);
-        System.out.println(endDate);
-        Date d = DateUtil.toDate(endDate, DateFormatEnum.YEAR_MONTH_DAY_HH_MM_SS);
-        System.out.println(DateUtil.dayDiff(date,DateUtil.nextDays(d,-15)));
+         Test ts = new Test();
+         ts.getClass().getDeclaredFields();
     }
 
 
