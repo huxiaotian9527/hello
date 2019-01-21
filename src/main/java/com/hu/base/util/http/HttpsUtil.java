@@ -62,14 +62,23 @@ public class HttpsUtil {
     public static String doPost(String url,String encoding,String jsonData, Map<String,String> header) throws Exception{
         HttpsURLConnection httpsConn = getHttpsURLConnection(url, POST);
         //设置报文头
-        for(Map.Entry<String,String> entry:header.entrySet()){
-            httpsConn.setRequestProperty(entry.getKey(),entry.getValue());
+        if (header != null) {
+            for (Map.Entry<String, String> entry : header.entrySet()) {
+                httpsConn.setRequestProperty(entry.getKey(), entry.getValue());
+            }
         }
         OutputStream os = httpsConn.getOutputStream();
-        InputStream is = httpsConn.getInputStream();
         os.write(jsonData.getBytes(encoding));
         os.flush();
         os.close();
+        InputStream is;
+        //返回结果不是200取错误流
+        if(httpsConn.getResponseCode()==httpsConn.HTTP_OK||
+                httpsConn.getResponseCode()==httpsConn.HTTP_CREATED||httpsConn.getResponseCode()==httpsConn.HTTP_ACCEPTED ){
+            is = httpsConn.getInputStream();
+        }else {
+            is = httpsConn.getErrorStream();
+        }
         ByteArrayOutputStream bao = new ByteArrayOutputStream();
         byte[] bytes = new byte[1024];
         int len;
@@ -77,7 +86,7 @@ public class HttpsUtil {
             bao.write(bytes, 0, len);
         }
         is.close();
-        return new String(bao.toByteArray(),encoding);
+        return new String(bao.toByteArray(), encoding);
     }
 
     /**
