@@ -123,17 +123,21 @@ public class RSAUtil {
 	 * @throws IllegalBlockSizeException
 	 * @throws BadPaddingException
 	 */
-	public static void init(java.security.PublicKey publicKey,java.security.PrivateKey privateKey) throws NoSuchAlgorithmException,
-    NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+	public static void init(PublicKey publicKey, PrivateKey privateKey) throws NoSuchAlgorithmException,
+			NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
 		if(rsa_public_key == null && publicKey != null){
-			rsa_public_key = publicKey;
-			encryptCipher = Cipher.getInstance(DEFAULT_ENCRYPT_ALGORITHM);
-			encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
+			synchronized (RSAUtil.class){
+				rsa_public_key = publicKey;
+				encryptCipher = Cipher.getInstance(DEFAULT_ENCRYPT_ALGORITHM);
+				encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
+			}
 		}
 		if(rsa_private_key == null && privateKey != null){
-			rsa_private_key = privateKey;
-			decryptCipher = Cipher.getInstance(DEFAULT_ENCRYPT_ALGORITHM);
-			decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
+			synchronized (RSAUtil.class){
+				rsa_private_key = privateKey;
+				decryptCipher = Cipher.getInstance(DEFAULT_ENCRYPT_ALGORITHM);
+				decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
+			}
 		}
 	}
 	
