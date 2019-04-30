@@ -45,8 +45,8 @@ public class SingleNode<E> {
     public void reverse(){
         Node<E> now = head;
         Node<E> previous = null;
-        while(now!=null){
-            Node<E> next = now.next;
+        Node<E> next;
+        while((next = now.next)!=null){
             now.next = previous;
             previous = now;
             now = next;

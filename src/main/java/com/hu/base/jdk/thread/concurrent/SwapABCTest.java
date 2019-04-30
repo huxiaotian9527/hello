@@ -9,10 +9,45 @@ import java.util.concurrent.Semaphore;
 public class SwapABCTest {
 
     public static void main(String[] args) {
-        Semaphore semaphore = new Semaphore(1);
-        new MyThread(semaphore,"A").start();
-        new MyThread(semaphore,"B").start();
-        new MyThread(semaphore,"C").start();
+//        Semaphore semaphore = new Semaphore(1);
+//        new MyThread(semaphore,"A").start();
+//        new MyThread(semaphore,"B").start();
+//        new MyThread(semaphore,"C").start();
+        Object lock = new Object();
+        new Thread(()->{
+            for (int i = 0; i < 50; i++) {
+                synchronized (lock){
+                    System.out.println("A");
+                    lock.notify();
+                    if(i<49){
+                        try {
+                            lock.wait();
+                        }catch (Exception e){
+
+                        }
+                    }
+                }
+            }
+
+        }).start();
+        new Thread(()->{
+            for (int i = 0; i < 50; i++) {
+                synchronized (lock){
+                    System.out.println("B`");
+                    lock.notify();
+                    if(i<49){
+                        try {
+                            lock.wait();
+                        }catch (Exception e){
+
+                        }
+                    }
+                }
+            }
+
+        }).start();
+
+
     }
 
 
