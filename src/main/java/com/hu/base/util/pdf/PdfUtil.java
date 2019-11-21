@@ -67,7 +67,7 @@ public class PdfUtil {
      * @return
      * @throws IOException
      */
-    private static List<Coordinate> getKeyWords(PdfReader pdfReader, int page, String key, float fixHeight, float defaultHeight) throws IOException {
+    public static List<Coordinate> getKeyWords(PdfReader pdfReader, int page, String key, float fixHeight, float defaultHeight) throws IOException {
         List<Coordinate> list = new ArrayList();       //可能会有多个匹配
         PdfReaderContentParser pdfReaderContentParser = new PdfReaderContentParser(pdfReader);
         pdfReaderContentParser.processContent(page, new RenderListener() {
@@ -106,7 +106,7 @@ public class PdfUtil {
      * @return 字节数组
      * @throws IOException
      */
-    private static byte[] getBytes(InputStream is) throws IOException {
+    public static byte[] getBytes(InputStream is) throws IOException {
         byte[] buf;
         try {
             buf = new byte[is.available()];

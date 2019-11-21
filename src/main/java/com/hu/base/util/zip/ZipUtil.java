@@ -14,8 +14,6 @@ import java.io.FileOutputStream;
  */
 public class ZipUtil {
 
-
-
     /**
      * @param inputFileName
      *            你要压缩的文件夹(整个完整路径)
@@ -24,10 +22,10 @@ public class ZipUtil {
      */
     public static void zip(String inputFileName, String zipFileName)
             throws Exception {
-        zip(zipFileName, new File(inputFileName));
+        zip(new File(inputFileName) ,zipFileName);
     }
 
-    private static void zip(String zipFileName, File inputFile)
+    private static void zip(File inputFile, String zipFileName)
             throws Exception {
         ZipOutputStream out = new ZipOutputStream(new FileOutputStream(
                 zipFileName));
@@ -58,26 +56,18 @@ public class ZipUtil {
     }
 
     public static void main(String[] temp) throws Exception{
-//        try {
-//            zip("D:\\zip",
-//                    "D:\\test.zip");
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
 
         ByteArrayOutputStream bao = new ByteArrayOutputStream();
         ZipOutputStream out = new ZipOutputStream(bao);
         out.setEncoding(System.getProperty("sun.jnu.encoding"));
-        out.putNextEntry(new ZipEntry("测试.doc"));
+        out.putNextEntry(new ZipEntry("D:\\测试"));
         byte[] bytes = getFile();
-        out.write(new byte[0]);
+        out.write(bytes);
         out.close();
-        FileOutputStream os = new FileOutputStream("D:\\1.zip");
-        os.write(bao.toByteArray());
     }
 
     private static byte[] getFile() throws Exception{
-        FileInputStream fis = new FileInputStream(new File("D:\\字段取值详细说明1122.doc"));
+        FileInputStream fis = new FileInputStream(new File("D:\\中互金数据上报.pptx"));
         byte[] bytes = new byte[1024*1024];
         ByteArrayOutputStream bao = new ByteArrayOutputStream();
         int a = fis.read(bytes);
