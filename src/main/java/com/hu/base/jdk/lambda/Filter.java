@@ -1,5 +1,8 @@
 package com.hu.base.jdk.lambda;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,7 +15,25 @@ public class Filter {
 
 
     public static void main(String[] args) {
+        LambdaDto dto = new LambdaDto();
+        dto.setName("ff");
+        dto.setId(3);
 
+        LambdaDto dto1 = new LambdaDto();
+        dto1.setName("ff");
+        dto1.setId(5);
+
+        LambdaDto dto2 = new LambdaDto();
+        dto2.setName("ff");
+        dto2.setId(1);
+        List<LambdaDto> lambdaList = new ArrayList<>();
+        lambdaList.add(dto);
+        lambdaList.add(dto1);
+        lambdaList.add(dto2);
+
+        lambdaList.sort(Comparator.comparing(LambdaDto::getId));
+
+        System.out.println(Arrays.toString(lambdaList.toArray()));
     }
 
     /**
@@ -46,4 +67,12 @@ public class Filter {
         String res = lambdaList.stream().map(e -> e.getName()).collect(Collectors.joining(","));
 
     }
+
+    /**
+     * 将集合中的元素排序
+     */
+    private static void sort(List<LambdaDto> lambdaList){
+      lambdaList.sort(Comparator.comparing(LambdaDto::getId));
+    }
+
 }
