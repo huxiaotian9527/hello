@@ -15,8 +15,11 @@ public class ThreadLocalDemo implements Runnable{
 	};
 
 	public void run(){
-		for(int i=0;i<1000;i++){
+		for(int i=0;i<100;i++){
 			localNum.set(localNum.get()+1);
+			if(i==50){
+				System.gc();
+			}
 			System.out.println(Thread.currentThread().getName()+": "+localNum.get());
 		}
 	}

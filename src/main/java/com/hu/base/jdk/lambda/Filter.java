@@ -31,8 +31,9 @@ public class Filter {
         lambdaList.add(dto1);
         lambdaList.add(dto2);
 
+        lambdaList = lambdaList.stream().filter(e->!e.getId().equals(3))
+                .collect(Collectors.toList());
         lambdaList.sort(Comparator.comparing(LambdaDto::getId));
-
         System.out.println(Arrays.toString(lambdaList.toArray()));
     }
 

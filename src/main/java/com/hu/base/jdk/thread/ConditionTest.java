@@ -42,7 +42,7 @@ public class ConditionTest {
             try {
                 int i = 0;
                 for ( ; i < 11; i++) {
-                    System.out.println(Thread.currentThread().getName()+str);
+                    System.out.println(Thread.currentThread().getName()+":"+str);
                     if(i<10){
                         condition2.signal();
                         condition1.await();
