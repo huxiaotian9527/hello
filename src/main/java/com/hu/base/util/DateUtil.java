@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -26,6 +28,34 @@ public class DateUtil {
     public static String toString(Date date, DateFormatEnum pattern) {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern.toString());
         return sdf.format(date);
+    }
+
+    /**
+     * 获取下月本天
+     */
+    public static LocalDate getNextMonthAndDay(LocalDate originalDate){
+        LocalDate nextDate = originalDate.minusMonths(-1);
+        int nextMonth = nextDate.getMonthValue();
+        String nextMonthStr;
+        if(nextMonth<10){
+            nextMonthStr = "0"+nextMonth;
+        }else {
+            nextMonthStr = nextMonth+"";
+        }
+        LocalDate localDate = nextDate.with(TemporalAdjusters.lastDayOfMonth());
+        int nextDayOfMonth = localDate.getDayOfMonth();         //下个月最大的日期
+        int originalDay = originalDate.getDayOfMonth();
+        String dayStr;
+        if(originalDay<=nextDayOfMonth){
+            if(originalDay<10){
+                dayStr = "0"+originalDay;
+            }else {
+                dayStr = originalDay+"";
+            }
+        }else {
+            dayStr = nextDayOfMonth+"";
+        }
+        return  LocalDate.parse(nextDate.getYear()+"-"+nextMonthStr+"-"+dayStr);
     }
 
     /**
