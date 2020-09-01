@@ -1,8 +1,12 @@
 package com.hu.base.util;
 
+
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 import java.io.FileOutputStream;
@@ -83,9 +87,9 @@ public class ExcelUtil {
         hssfSheet.setDefaultRowHeight((short) 450);
 
         //设置背景色
-        style1.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);//设置为灰色
-        style1.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-        style1.setFillBackgroundColor(HSSFColor.GREY_25_PERCENT.index);
+//        style1.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);//设置为灰色
+//        style1.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+//        style1.setFillBackgroundColor(HSSFColor.GREY_25_PERCENT.index);
 
         // 指定当单元格内容显示不下时自动换行
         style2.setWrapText(true);
@@ -95,7 +99,6 @@ public class ExcelUtil {
 //        font1.setColor(HSSFColor.OLIVE_GREEN.index);
 //        font1.setFontName("宋体"); //设置字体
 //        font1.setFontHeightInPoints((short) 11); //设置字号
-        font1.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
 
         // 生成一个字体
         HSSFFont font2 = excel.createFont();
@@ -105,22 +108,21 @@ public class ExcelUtil {
         style2.setFont(font2);
 
         //设置居中
-        style1.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中
-        style1.setVerticalAlignment(CellStyle.VERTICAL_CENTER);//垂直居中
-        style2.setAlignment(HSSFCellStyle.ALIGN_LEFT); // 居左
-        style2.setVerticalAlignment(CellStyle.VERTICAL_CENTER);//垂直居中
+        style1.setAlignment(HorizontalAlignment.CENTER); // 居中
+        style1.setVerticalAlignment(VerticalAlignment.CENTER);//垂直居中
+        style2.setAlignment(HorizontalAlignment.LEFT); // 居左
+        style2.setVerticalAlignment(VerticalAlignment.CENTER);//垂直居中
 
         //设置边框
-        style1.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框
-        style1.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框
-        style1.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框
-        style1.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框
-
-        style2.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框
-        style2.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框
-        style2.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框
-        style2.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框
-
+//        style1.setBorderBottom(BorderStyle.BORDER_THIN); //下边框
+//        style1.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框
+//        style1.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框
+//        style1.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框
+//
+//        style2.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框
+//        style2.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框
+//        style2.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框
+//        style2.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框
 
         HSSFRow Row = hssfSheet.createRow(0);
         //创建单元格

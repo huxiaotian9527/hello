@@ -428,13 +428,13 @@ public class POIExcelUtil {
      * @return
      */
     private static String getStringValue(Cell cell) {
-        if (cell.getCellType() != Cell.CELL_TYPE_STRING) {
-            if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+        if (cell.getCellType() != CellType.STRING) {
+            if (cell.getCellType() == CellType.NUMERIC) {
                 if (org.apache.poi.ss.usermodel.DateUtil.isCellDateFormatted(cell)) {
                     return com.hu.base.util.DateUtil.toString(cell.getDateCellValue(), DateFormatEnum.YEAR_MONTH_DAY_HH_MM_SS);
                 }
             }
-            cell.setCellType(Cell.CELL_TYPE_STRING);
+            cell.setCellType(CellType.STRING);
         }
         return cell.getStringCellValue().trim();
     }
@@ -591,31 +591,31 @@ public class POIExcelUtil {
             int firstIndex, int lastIndex) throws Exception {
 
         // 默认样式
-        CellStyle style = wb.createCellStyle();
-        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
-        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
-        style.setFillForegroundColor(HSSFColor.WHITE.index);
-
-        // 金额样式
-        CellStyle moneyStyle = wb.createCellStyle();
-        moneyStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        moneyStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-        moneyStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
-        moneyStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
-        moneyStyle.setFillForegroundColor(HSSFColor.WHITE.index);
-        DataFormat format = wb.createDataFormat();
-        moneyStyle.setDataFormat(format.getFormat("#,#0.0000"));
-
-        // 百分比样式
-        CellStyle percentageStyle = wb.createCellStyle();
-        percentageStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        percentageStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-        percentageStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
-        percentageStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
-        percentageStyle.setFillForegroundColor(HSSFColor.WHITE.index);
-        percentageStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("0.00%"));
+//        CellStyle style = wb.createCellStyle();
+//        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//        style.setFillForegroundColor(HSSFColor.WHITE.index);
+//
+//        // 金额样式
+//        CellStyle moneyStyle = wb.createCellStyle();
+//        moneyStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+//        moneyStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//        moneyStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+//        moneyStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//        moneyStyle.setFillForegroundColor(HSSFColor.WHITE.index);
+//        DataFormat format = wb.createDataFormat();
+//        moneyStyle.setDataFormat(format.getFormat("#,#0.0000"));
+//
+//        // 百分比样式
+//        CellStyle percentageStyle = wb.createCellStyle();
+//        percentageStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+//        percentageStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//        percentageStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+//        percentageStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//        percentageStyle.setFillForegroundColor(HSSFColor.WHITE.index);
+//        percentageStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("0.00%"));
 
         // 定义存放英文字段名和中文字段名的数组
         String[] enFields = new String[fieldMap.size()];
@@ -667,20 +667,20 @@ public class POIExcelUtil {
                     }
 
                 }
-
-                // 设置样式
-                if (row.getCell(i).getCellType() == Cell.CELL_TYPE_NUMERIC) {
-                    if (StringUtils.contains(cnFields[i], "%")) {
-                        // 列中带%符号
-                        cell.setCellStyle(percentageStyle);
-                    } else {
-                        // 默认转为金额模式
-                        cell.setCellStyle(moneyStyle);
-                    }
-
-                } else {
-                    cell.setCellStyle(style);
-                }
+//
+//                // 设置样式
+//                if (row.getCell(i).getCellType() == Cell.CELL_TYPE_NUMERIC) {
+//                    if (StringUtils.contains(cnFields[i], "%")) {
+//                        // 列中带%符号
+//                        cell.setCellStyle(percentageStyle);
+//                    } else {
+//                        // 默认转为金额模式
+//                        cell.setCellStyle(moneyStyle);
+//                    }
+//
+//                } else {
+//                    cell.setCellStyle(style);
+//                }
 
                 int size = fieldValue.getBytes().length;
                 // 获取每列最大宽度
@@ -714,12 +714,12 @@ public class POIExcelUtil {
 
         CellStyle style = wb.createCellStyle();
 
-        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
-        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
-
-        style.setFillForegroundColor(HSSFColor.WHITE.index);
+//        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//
+//        style.setFillForegroundColor(HSSFColor.WHITE.index);
 
         // 定义存放英文字段名和中文字段名的数组
         String[] enFields = new String[fieldMap.size()];
@@ -762,22 +762,22 @@ public class POIExcelUtil {
     public static void setTitleStyle(Workbook wb, Sheet sheet, int rowIndex) {
         CellStyle style = wb.createCellStyle();
         Font font = wb.createFont();
-        // 字体粗体
-        font.setBoldweight(Font.BOLDWEIGHT_BOLD);
-        font.setFontHeightInPoints((short) 11);
-        style.setFont(font);
-
-        // 设置样式
-        // style.setFillForegroundColor(IndexedColors.SKY_BLUE.index);
-        style.setFillPattern(CellStyle.SOLID_FOREGROUND);
-        style.setAlignment(CellStyle.ALIGN_CENTER);
-
-        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
-        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
-
-        style.setFillForegroundColor(HSSFColor.WHITE.index);
+//        // 字体粗体
+//        font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+//        font.setFontHeightInPoints((short) 11);
+//        style.setFont(font);
+//
+//        // 设置样式
+//        // style.setFillForegroundColor(IndexedColors.SKY_BLUE.index);
+//        style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+//        style.setAlignment(CellStyle.ALIGN_CENTER);
+//
+//        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//
+//        style.setFillForegroundColor(HSSFColor.WHITE.index);
 
         Row row = sheet.getRow(rowIndex);
         if (row != null)
@@ -797,20 +797,20 @@ public class POIExcelUtil {
     public static void setBodyStyle(Workbook wb, Sheet sheet, int rowIndex) {
         CellStyle style = wb.createCellStyle();
         Font font = wb.createFont();
-        // 字体粗体
-        font.setBoldweight(Font.BOLDWEIGHT_BOLD);
-        font.setFontHeightInPoints((short) 11);
-        style.setFont(font);
-
-        // 设置样式
-        style.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index);
-        style.setFillPattern(CellStyle.SOLID_FOREGROUND);
-        style.setAlignment(CellStyle.ALIGN_CENTER);
-
-        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
-        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//        // 字体粗体
+//        font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+//        font.setFontHeightInPoints((short) 11);
+//        style.setFont(font);
+//
+//        // 设置样式
+//        style.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index);
+//        style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+//        style.setAlignment(CellStyle.ALIGN_CENTER);
+//
+//        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
 
         Row row = sheet.getRow(rowIndex);
         if (row != null)
