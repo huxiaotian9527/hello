@@ -2,15 +2,12 @@ package com.hu.base.util.draw;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.charts.ChartAxis;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xddf.usermodel.*;
 import org.apache.poi.xddf.usermodel.chart.*;
 import org.apache.poi.xssf.usermodel.*;
-import org.apache.poi.xssf.usermodel.charts.XSSFManualLayout;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Random;
 
 public class ScatterPlot {
@@ -77,9 +74,6 @@ public class ScatterPlot {
             chart.getCTChart().getPlotArea().getScatterChartArray(0).getSerArray(0).getMarker()
                     .addNewSpPr().set(propertiesMarker.getXmlObject());
             chart.plot(data);
-
-
-
             // Write the output to a file
             try (FileOutputStream fileOut = new FileOutputStream("C:\\Users\\hutiantian\\Desktop\\ooxml-scatter-chart1.xlsx")) {
                 wb.write(fileOut);
@@ -101,5 +95,6 @@ public class ScatterPlot {
         Random random = new Random();
         return (random.nextInt(20000) - 10000) * 0.1;
     }
+
 
 }

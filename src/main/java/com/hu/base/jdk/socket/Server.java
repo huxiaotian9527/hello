@@ -1,4 +1,4 @@
-package com.hu.base.jdk.Socket;
+package com.hu.base.jdk.socket;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
