@@ -2,3 +2,30 @@
 firewall-cmd --zone=public --add-port=8080/tcp --permanent
 firewall-cmd --reload
 
+--jvm启动参数配置
+-server -XX:+UseParNewGC -XX:+UseConcMarkSweepGC
+-Xms8g -Xmx8g -Xmn3g -XX:+PrintGCDetails -XX:+PrintGCDateStamps
+-Xloggc:/ap_log/spc/spc-gc-%t.log
+
+--jvm导致cpu100问题处理
+ps -ef|grep java    //找到进程
+top -Hp pid  //找到占用cpu最高得线程
+jstat -gccause pid 2000			//每隔2s输出full gc结果
+/////ps -mp 29341 -o THREAD,tid,time | sort -rn	//查看pid线程占用情况--不建议用这个
+jstack 29341 >js0427.txt			//打印栈日志
+printf '%x\n' 32255						//将pid转化成16进制
+jstack 29341|grep 7dff -A20			//输出关键字后20行
+
+--查看jvm参数
+jmap -heap $pid     ||   java -XX:+PrintCommandLineFlags -version
+--导出堆内存
+jmap -dump:format=b,file=heap.bin <pid>
+
+--当前目录大小
+du -h --max-depth=1 *
+
+--查询当前线程pid ( grep -v 不包含|awk '{print $2}' 取第二列 )
+ps -ef | grep xxx-java-project | grep -v grep | awk '{print $2}'
+
+--npm升级依赖版本
+npm install xxx@x.x.x
