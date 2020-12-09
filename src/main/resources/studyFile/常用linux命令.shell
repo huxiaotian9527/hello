@@ -6,26 +6,44 @@ firewall-cmd --reload
 -server -XX:+UseParNewGC -XX:+UseConcMarkSweepGC
 -Xms8g -Xmx8g -Xmn3g -XX:+PrintGCDetails -XX:+PrintGCDateStamps
 -Xloggc:/ap_log/spc/spc-gc-%t.log
+-XX:+PrintAdaptiveSizePolicy # 自适应策略，调节Young Old Size
+-Xss4096k  --栈大小
+--g1收集器
+-XX:+UseG1GC -XX:MaxGCPauseMillis=200
+-Xms24g -Xmx24g -XX:+PrintAdaptiveSizePolicy
+-XX:InitiatingHeapOccupancyPercent=70 -XX:ConcGCThreads=8
+-XX:ParallelGCThreads=13 -XX:MetaspaceSize=10g
+-XX:OnOutOfMemoryError=/ap_log/gc/oom.sh -XX:+PrintGCDetails
+-XX:+PrintGCDateStamps -Xloggc:/ap_log/gc/eda-gc-%t.log
 
 --jvm导致cpu100问题处理
 ps -ef|grep java    //找到进程
 top -Hp pid  //找到占用cpu最高得线程
 jstat -gccause pid 2000			//每隔2s输出full gc结果
 /////ps -mp 29341 -o THREAD,tid,time | sort -rn	//查看pid线程占用情况--不建议用这个
-jstack 29341 >js0427.txt			//打印栈日志
+jstack 29341 > js0427.txt			//打印栈日志,命令间要加空格
 printf '%x\n' 32255						//将pid转化成16进制
 jstack 29341|grep 7dff -A20			//输出关键字后20行
 
 --查看jvm参数
 jmap -heap $pid     ||   java -XX:+PrintCommandLineFlags -version
+
+//查看栈大小
+java -XX:+PrintFlagsFinal -version | grep -iE 'HeapSize|PermSize|ThreadStackSize'
 --导出堆内存
-jmap -dump:format=b,file=heap.bin <pid>
+jmap -dump:format=b,file=heap.hprof $pid
+jmap -histo:live  pid       --jvm内存对象统计
 
 --当前目录大小
 du -h --max-depth=1 *
+du -sh xxdir/   --统计整个目录下文件夹大小，要加/
 
 --查询当前线程pid ( grep -v 不包含|awk '{print $2}' 取第二列 )
 ps -ef | grep xxx-java-project | grep -v grep | awk '{print $2}'
 
 --npm升级依赖版本
 npm install xxx@x.x.x
+npm install
+
+--nginx通过url中的userId做hash分发
+hash   $arg_userId;
