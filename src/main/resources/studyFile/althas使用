@@ -1,0 +1,8 @@
+1、安装arthas
+
+2、java -jar arthas-boot.jar
+
+3、查看静态成员变量
+
+getstatic com.tibco.tibrv.Tibrv charsetName
+getstatic com.tibco.tibrv.TibrvMsg DEFAULT_ENCODING

@@ -15,6 +15,7 @@ firewall-cmd --reload
 -XX:ParallelGCThreads=13 -XX:MetaspaceSize=10g
 -XX:OnOutOfMemoryError=/ap_log/gc/oom.sh -XX:+PrintGCDetails
 -XX:+PrintGCDateStamps -Xloggc:/ap_log/gc/eda-gc-%t.log
+-Dfile.encoding=gbk
 
 --jvm导致cpu100问题处理
 ps -ef|grep java    //找到进程
@@ -47,3 +48,7 @@ npm install
 
 --nginx通过url中的userId做hash分发
 hash   $arg_userId;
+
+--查看内核日志
+dmesg -T | grep java
+
