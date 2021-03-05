@@ -1,8 +1,14 @@
 1、安装arthas
 
 2、java -jar arthas-boot.jar
-
+--停止arthas进程
+java -jar arthas-client.jar 127.0.0.1 3658 -c "stop"
 3、查看静态成员变量
-
 getstatic com.tibco.tibrv.Tibrv charsetName
-getstatic com.tibco.tibrv.TibrvMsg DEFAULT_ENCODING
+
+4、查看对象值
+ognl '@BISTel.PeakPerformance.Message.EquipmentModel@getInstance().eqpList'
+--执行方法
+ognl '@BISTel.PeakPerformance.Message.EquipmentModel@getInstance().getEquipmentModel("MDAOI440")'
+--获取spring容器中的对象值
+ognl '@com.runoqd.itc.quartz.utils.SpringApplicationContextHolder@getSpringBean("insurancePolicyUseCountController").detailSize'

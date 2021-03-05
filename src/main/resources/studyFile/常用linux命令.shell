@@ -49,6 +49,11 @@ npm install
 --nginx通过url中的userId做hash分发
 hash   $arg_userId;
 
---查看内核日志
+--查看内核日志（排查oom killer）
 dmesg -T | grep java
+
+--远程调试服务器
+jvm参数中添加 -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5006
+例如boot项目：
+java -Xdebug -Xrunjdwp:transport=dt_socket,address=5005,server=y,suspend=y -jar file-copier-0.0.1-SNAPSHOT.jar &
 

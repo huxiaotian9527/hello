@@ -6,17 +6,17 @@ sudo apt update
 sudo apt install mysql-server
 
 /*-------------可以不做----------*/
-3.运行安全脚本，配置mysql安全措施(过程中会设置mysql密码)：
+3.运行安全脚本,配置mysql安全措施(过程中会设置mysql密码):
 sudo mysql_secure_installation
 
 4.无密码登陆
 sudo mysql
 
-6.新增用户，并赋权限：*.*表示所有库所有表
+6.新增用户,并赋权限: *.*表示所有库所有表
 grant all privileges on *.* to 'hutiantian'@'%' identified by 'Hu_123456';
 flush privileges;       --刷新
 
-7.修改mysql配置文件 bind-address为0.0.0.0，并重启mysql
+7.修改mysql配置文件 bind-address为0.0.0.0,并重启mysql
 cd /etc/mysql/mysql.conf.d
 vi mysqld.cnf
 systemctl restart mysql
@@ -28,7 +28,7 @@ update user set authentication_string = password('root123'), plugin='mysql_nativ
 /********************************ubuntu安装jdk环境************************************************/
 1.下载jdk1.8tar包 https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 
-2.上传到指定目录，例如 /usr/local
+2.上传到指定目录,例如 /usr/local
 cd /usr/local
 rz jdk-8u211-linux-x64.tar.gz
 
@@ -45,5 +45,5 @@ export PATH=.:${JAVA_HOME}/bin:$PATH
 生效
 source ~/.bashrc
 
-5.启动springboot项目，后面要加个 & 符号，这样ctrl+c就会不会关闭boot项目
+5.启动springboot项目,后面要加个 & 符号,这样ctrl+c就会不会关闭boot项目
 java -jar bird-0.0.1-SNAPSHOT.jar &
